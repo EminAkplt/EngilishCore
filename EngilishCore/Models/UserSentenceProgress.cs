@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace EnglishCore.Models
 {
@@ -17,7 +17,13 @@ namespace EnglishCore.Models
         // 0: Yeni cümle, 1: Tekrar bekleyen cümle, 2: Öğrenilenler Havuzuna düşmüş cümle
         public int ViewCount { get; set; } = 0;
 
-        // Sistemin gün atlamalarında nerede kaldığını bulmasını sağlayan son görülme tarihi
+        // Sistemin gün atlamalarında nerede kaldığını bulmasını sağlayan son görülme tarihi (UTC)
         public DateTime? LastReviewed { get; set; }
+
+        // Navigation property: bu kaydın hangi kullanıcıya ait olduğunu sorgularda Include ile getirir
+        public AppUser AppUser { get; set; } = null!;
+
+        // Navigation property: bu kaydın hangi cümleye ait olduğunu sorgularda Include ile getirir
+        public Sentence Sentence { get; set; } = null!;
     }
 }

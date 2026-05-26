@@ -1,4 +1,6 @@
-﻿namespace EnglishCore.Models
+using System.ComponentModel.DataAnnotations;
+
+namespace EnglishCore.Models
 {
     // Sistemdeki tüm İngilizce kelimelerin saf halde tutulduğu sabit sözlük tablosu
     public class Word
@@ -7,12 +9,18 @@
         public int Id { get; set; }
 
         // Kelimenin İngilizce orijinal yazılışı (Örn: "Apple")
-        public string EnglishText { get; set; }
+        [Required]
+        [MaxLength(100)]
+        public string EnglishText { get; set; } = string.Empty;
 
         // Kelimenin Türkçe tam karşılığı (Örn: "Elma")
-        public string TurkishText { get; set; }
+        [Required]
+        [MaxLength(200)]
+        public string TurkishText { get; set; } = string.Empty;
 
         // Bu kelimenin hangi zorluk derecesine ait olduğu (Örn: "A1")
-        public string Level { get; set; }
+        [Required]
+        [MaxLength(2)]
+        public string Level { get; set; } = string.Empty;
     }
 }

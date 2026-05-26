@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace EnglishCore.Models
 {
@@ -17,7 +17,13 @@ namespace EnglishCore.Models
         // 0: Hiç görülmedi, 1: Dün görüldü (Tekrarda), 2: İki kez bilindi (Öğrenilenler Havuzunda)
         public int ViewCount { get; set; } = 0;
 
-        // Kullanıcı gün atladığında takvimin kaymaması için kelimeye son bakılan tarih
+        // Kullanıcı gün atladığında takvimin kaymaması için kelimeye son bakılan tarih (UTC)
         public DateTime? LastReviewed { get; set; }
+
+        // Navigation property: bu kaydın hangi kullanıcıya ait olduğunu sorgularda Include ile getirir
+        public AppUser AppUser { get; set; } = null!;
+
+        // Navigation property: bu kaydın hangi kelimeye ait olduğunu sorgularda Include ile getirir
+        public Word Word { get; set; } = null!;
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace EnglishCore.Models
+using System.ComponentModel.DataAnnotations;
+
+namespace EnglishCore.Models
 {
     // Sistemdeki tüm İngilizce cümlelerin saf halde tutulduğu sabit sözlük tablosu
     public class Sentence
@@ -7,12 +9,18 @@
         public int Id { get; set; }
 
         // Cümlenin İngilizce orijinal yazılışı (Örn: "This is a book.")
-        public string EnglishText { get; set; }
+        [Required]
+        [MaxLength(300)]
+        public string EnglishText { get; set; } = string.Empty;
 
         // Cümlenin Türkçe tam karşılığı (Örn: "Bu bir kitaptır.")
-        public string TurkishText { get; set; }
+        [Required]
+        [MaxLength(500)]
+        public string TurkishText { get; set; } = string.Empty;
 
         // Bu cümlenin hangi zorluk derecesine ait olduğu (Örn: "A1")
-        public string Level { get; set; }
+        [Required]
+        [MaxLength(2)]
+        public string Level { get; set; } = string.Empty;
     }
 }

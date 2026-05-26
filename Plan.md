@@ -224,7 +224,7 @@ Tüm string alanlarda `[Required]` ve uygun `[MaxLength]` konulur. EF Core, Post
 
 ## 9. Güvenlik
 
-- **Şifreler:** `AppUser.PasswordHash` alanında hash'lenmiş olarak tutulur. Hashing için **BCrypt.Net-Next** veya ASP.NET Core'un yerleşik `PasswordHasher<AppUser>` sınıfı kullanılır. Düz metin parola hiçbir noktada DB'ye yazılmaz, logda görünmez.
+- **Şifreler (geliştirme aşaması — geçici):** `AppUser.PasswordHash` alanına şimdilik **düz metin** olarak yazılır. Sade implementasyon için auth akışı önce düz metinle kurulur. Auth tamamlandıktan sonra veya production'a alınmadan önce **BCrypt.Net-Next** ile hash'lemeye geçilecek (yol haritası adımı). Production'da düz metin parola asla DB'ye yazılmaz.
 - **Kimlik doğrulama:** ASP.NET Core Cookie Authentication.
 - **Yetkilendirme:** `[Authorize]` ve `[Authorize(Roles = "Admin")]` attribute'ları.
 - **CSRF:** Tüm POST formlarında `@Html.AntiForgeryToken()` + controller'da `[ValidateAntiForgeryToken]`.
@@ -261,3 +261,4 @@ Tüm string alanlarda `[Required]` ve uygun `[MaxLength]` konulur. EF Core, Post
 11. İlerleme Çizelgesi widget'ı.
 12. Karışık Tekrar Modu.
 13. UI iyileştirme (Tinder-card animasyon, görsel API entegrasyonu, Web Speech API).
+14. **Şifre hash'lemeyi etkinleştir** (BCrypt.Net-Next ile) — auth tamamlandıktan sonra veya production öncesi.

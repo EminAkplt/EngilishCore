@@ -31,6 +31,15 @@
                                 <i class="bi bi-house-door me-1"></i>Ana Sayfa
                             </a>
                         </li>
+                        @* Login olmuş kullanıcılar için "Çalış" menüsü — kelime kartlarına yönlendirir *@
+                        @if (User.Identity?.IsAuthenticated == true)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-controller="Study" asp-action="Index">
+                                    <i class="bi bi-card-text me-1"></i>Çalış
+                                </a>
+                            </li>
+                        }
                         @* Sadece Admin rolündeki kullanıcılar Words/Sentences yönetim menülerini görür *@
                         @if (User.IsInRole("Admin"))
                         {

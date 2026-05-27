@@ -1,8 +1,142 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+@*
+    Ana sayfa - landing page
+    Auth durumuna göre dinamik:
+      - Login değilse: marketing CTA (Kayıt Ol / Giriş Yap)
+      - Login ise: "Çalışmaya Başla" CTA'sı (ileride Daily Card'a yönlenecek)
+*@
+@{
+    ViewData["Title"] = "Ana Sayfa";
+    var isAuthenticated = User.Identity?.IsAuthenticated == true;
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+@*  ========================================
+    HERO SECTION — Büyük başlık + CTA
+    ========================================  *@
+<section class="hero py-5">
+    <div class="row align-items-center g-4">
+        <div class="col-lg-7">
+            <h1 class="display-5 fw-bold mb-3">
+                Kelimeleri <span class="text-gradient">kümülatif</span> şekilde öğren.
+            </h1>
+            <p class="lead text-muted mb-4">
+                EngilishCore, her gün öğrendiklerini sistematik tekrarla kalıcı hafızana taşır.
+                Kaldığın yerden devam edersin — atladığın gün seni başa atmaz.
+            </p>
+            <div class="d-flex flex-wrap gap-2">
+                @if (isAuthenticated)
+                {
+                    @*  Login olmuş kullanıcıyı kelime kartları sayfasına yönlendir  *@
+                    <a asp-controller="Study" asp-action="Index" class="btn btn-primary btn-lg">
+                        <i class="bi bi-play-circle me-1"></i>Çalışmaya Başla
+                    </a>
+                }
+                else
+                {
+                    @*  Login değilse: ücretsiz kayıt + giriş yap  *@
+                    <a asp-controller="Account" asp-action="Register" class="btn btn-primary btn-lg">
+                        <i class="bi bi-person-plus me-1"></i>Ücretsiz Başla
+                    </a>
+                    <a asp-controller="Account" asp-action="Login" class="btn btn-outline-secondary btn-lg">
+                        Giriş Yap
+                    </a>
+                }
+            </div>
+        </div>
+        @*  Sağda büyük illüstrasyon - mortarboard (mezuniyet) ikonu, eğitim teması  *@
+        <div class="col-lg-5 text-center d-none d-lg-block">
+            <div class="hero-illustration">
+                <i class="bi bi-mortarboard-fill"></i>
+            </div>
+        </div>
+    </div>
+</section>
+
+@*  ========================================
+    NASIL ÇALIŞIR — 3 adım kart
+    ========================================  *@
+<section class="py-5">
+    <div class="text-center mb-4">
+        <h2 class="fw-bold mb-1">Nasıl Çalışır?</h2>
+        <p class="text-muted">3 adımda öğrenme döngün</p>
+    </div>
+    <div class="row g-4">
+        @*  Adım 1 — Yeni kelimeler  *@
+        <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body p-4 text-center">
+                    <div class="feature-icon mb-3"><i class="bi bi-1-circle-fill"></i></div>
+                    <h5 class="fw-bold">Yeni Kelimeler</h5>
+                    <p class="text-muted small mb-0">
+                        Her gün belirlediğin limit kadar yeni kelime ve cümle gelir.
+                        Tinder-card gibi kaydırarak çalışırsın, sesli okuma ve görsel destekle.
+                    </p>
+                </div>
+            </div>
+        </div>
+        @*  Adım 2 — 2-aşamalı tekrar  *@
+        <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body p-4 text-center">
+                    <div class="feature-icon mb-3"><i class="bi bi-2-circle-fill"></i></div>
+                    <h5 class="fw-bold">2-Aşamalı Tekrar</h5>
+                    <p class="text-muted small mb-0">
+                        Bugünkü yeni kelimeler yarın "Tekrar" olarak karşına çıkar.
+                        Her içerik tam 2 kez gözden geçirilir.
+                    </p>
+                </div>
+            </div>
+        </div>
+        @*  Adım 3 — Öğrenilenler havuzu  *@
+        <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body p-4 text-center">
+                    <div class="feature-icon mb-3"><i class="bi bi-3-circle-fill"></i></div>
+                    <h5 class="fw-bold">Öğrenilenler Havuzu</h5>
+                    <p class="text-muted small mb-0">
+                        Geçtiğin kelimeler havuza düşer. Unuttuysan "Geri Al" ile
+                        tekrar aktif döngüye iade edebilirsin.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@*  ========================================
+    KÜMÜLATİF AKIŞ — vurgu kartı
+    ========================================  *@
+<section class="py-5">
+    <div class="card border-0 shadow-sm" style="background-color: #f1f5f9;">
+        <div class="card-body p-4 p-md-5">
+            <div class="row align-items-center g-4">
+                <div class="col-md-2 text-center">
+                    <div class="auth-logo">
+                        <i class="bi bi-arrow-repeat"></i>
+                    </div>
+                </div>
+                <div class="col-md-10">
+                    <h4 class="fw-bold mb-2">Kümülatif Akış — Kaldığın Yerden Devam</h4>
+                    <p class="text-muted mb-0">
+                        Sistem takvime bağlı çalışmaz. Bir gün, bir hafta atlasan bile
+                        seni başa atmaz, ceza vermez — kaldığın yerden devam edersin.
+                        Her seviyenin (A1 → A2 → B1 → B2 → C1 → C2) ilerleme yüzdesini gerçek zamanlı görürsün.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@*  ========================================
+    SON CTA (sadece login değilse)
+    ========================================  *@
+@if (!isAuthenticated)
+{
+    <section class="py-5 text-center">
+        <h3 class="fw-bold mb-3">Başlamaya hazır mısın?</h3>
+        <p class="text-muted mb-4">Ücretsiz hesap aç, seviyeni seç, ilk kelimelerinle başla.</p>
+        <a asp-controller="Account" asp-action="Register" class="btn btn-primary btn-lg">
+            <i class="bi bi-person-plus me-1"></i>Hemen Kayıt Ol
+        </a>
+    </section>
+}

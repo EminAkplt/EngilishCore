@@ -256,7 +256,7 @@ Tüm string alanlarda `[Required]` ve uygun `[MaxLength]` konulur. EF Core, Post
 6. ✅ Auth controller'ları: Register / Login / Logout (+ AccessDenied + seed admin).
 7. ✅ Admin paneli: Word ve Sentence CRUD (rol bazlı `[Authorize(Roles="Admin")]`).
 8. ⏳ User dashboard: günlük limit ayarı + seviye seçimi.
-9. ⏳ Günlük Kart akışı (yeni + tekrar listesi mantığı).
+9. 🟡 Günlük Kart akışı — temel kart sayfası, seslendirme (Dictionary API + Web Speech fallback) ve flip animasyon hazır. "Yeni + Tekrar" mantığı, ViewCount güncellemesi ve havuz entegrasyonu eksik.
 10. ⏳ Öğrenilenler Havuzu ekranı + Geri Al butonu.
 11. ⏳ İlerleme Çizelgesi widget'ı.
 12. ⏳ Karışık Tekrar Modu.

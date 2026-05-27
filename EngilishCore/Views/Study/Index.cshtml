@@ -1,0 +1,90 @@
+@*
+    Kelime çalışma — kart akışı sayfası
+    Her kart 2 yüzlü: önde İngilizce + Sesli Oku butonu, arkada Türkçe karşılık
+    Karta tıklayınca CSS 3D rotation ile çevrilir
+    Seslendirme: önce Free Dictionary API (native ses), yoksa Web Speech API (browser TTS)
+*@
+@model IEnumerable<EnglishCore.Models.Word>
+
+@{
+    ViewData["Title"] = "Çalışma";
+    var level = ViewData["UserLevel"] as string;
+}
+
+@*  Sayfa başlığı + seviye rozeti + kelime sayısı  *@
+<div class="text-center mb-4">
+    <h2 class="fw-bold mb-1"><i class="bi bi-card-text me-2"></i>Çalışma</h2>
+    <p class="text-muted mb-0">
+        Seviye: <span class="badge bg-primary">@level</span>
+        <span class="ms-2">@Model.Count() kelime</span>
+    </p>
+</div>
+
+@if (!Model.Any())
+{
+    @*  Bu seviyede hiç kelime yoksa kullanıcıya bilgi göster  *@
+    <div class="card border-0 shadow-sm text-center p-5 mx-auto" style="max-width: 480px;">
+        <div class="mb-3 text-muted" style="font-size: 3rem;">
+            <i class="bi bi-inbox"></i>
+        </div>
+        <h5 class="mb-2">Bu seviye için kelime yok.</h5>
+        <p class="text-muted mb-0 small">Admin'in @level seviyesine kelime eklemesi gerekiyor.</p>
+    </div>
+}
+else
+{
+    @*  KART YIĞINI — JavaScript bir seferde sadece bir kartı görünür yapar  *@
+    <div class="card-stack" id="cardStack">
+        @{ int i = 0; }
+        @foreach (var w in Model)
+        {
+            <div class="study-card" data-index="@i" data-english="@w.EnglishText">
+                <div class="study-card-inner">
+                    @*  ÖN YÜZ — İngilizce kelime + ses butonu  *@
+                    <div class="study-card-face study-card-front">
+                        <span class="badge bg-primary mb-3">@w.Level</span>
+                        <i class="bi bi-translate study-card-icon"></i>
+                        <h2 class="study-card-text">@w.EnglishText</h2>
+                        @*  Sesli okuma butonu — JS event'i kartın flip olmasını engeller  *@
+                        <button type="button" class="btn btn-outline-primary btn-speak" data-word="@w.EnglishText">
+                            <i class="bi bi-volume-up me-1"></i>Sesli Oku
+                        </button>
+                        <p class="text-muted small mt-3 mb-0">Türkçe anlamı için karta tıkla</p>
+                    </div>
+                    @*  ARKA YÜZ — Türkçe karşılığı  *@
+                    <div class="study-card-face study-card-back">
+                        <span class="badge mb-3">Çeviri</span>
+                        <i class="bi bi-chat-square-quote study-card-icon"></i>
+                        <h2 class="study-card-text">@w.TurkishText</h2>
+                        <p class="small mt-3 mb-0" style="opacity:.7;">İngilizceye dönmek için karta tıkla</p>
+                    </div>
+                </div>
+            </div>
+            i++;
+        }
+    </div>
+
+    @*  Navigasyon kontrolleri — Önceki / sayaç / Sonraki  *@
+    <div class="d-flex justify-content-center align-items-center gap-3 mt-4">
+        <button type="button" class="btn btn-outline-secondary" id="btnPrev">
+            <i class="bi bi-arrow-left"></i> Önceki
+        </button>
+        <div class="text-muted fw-medium">
+            <span id="cardIndex">1</span> / <span id="cardTotal">@Model.Count()</span>
+        </div>
+        <button type="button" class="btn btn-primary" id="btnNext">
+            Sonraki <i class="bi bi-arrow-right"></i>
+        </button>
+    </div>
+
+    @*  Bilgi notu — daily limit / pool mantığı henüz aktif değil  *@
+    <div class="alert alert-info mt-4 text-center small mx-auto" style="max-width: 480px;">
+        <i class="bi bi-info-circle me-1"></i>
+        Şu an basit listeleme modundayız. "Yeni + Tekrar" döngüsü, Öğrenilenler Havuzu ve İlerleme Çizelgesi yakında aktif olacak.
+    </div>
+}
+
+@section Scripts {
+    @*  Kart akışı + seslendirme logic'i (Dictionary API + Web Speech fallback)  *@
+    <script src="~/js/study.js" asp-append-version="true"></script>
+}

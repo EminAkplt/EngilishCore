@@ -1,0 +1,88 @@
+@model EnglishCore.ViewModels.RegisterViewModel
+
+@{
+    ViewData["Title"] = "Kayıt Ol";
+}
+
+<div class="auth-wrapper">
+    <div class="card auth-card">
+        <div class="card-body p-4 p-md-5">
+            <div class="text-center mb-4">
+                <div class="auth-logo mb-3">
+                    <i class="bi bi-mortarboard-fill"></i>
+                </div>
+                <h3 class="fw-bold mb-1">Hesap Oluştur</h3>
+                <p class="text-muted small mb-0">EngilishCore'a katıl, kelimeleri kümülatif öğren.</p>
+            </div>
+
+            <form asp-controller="Account" asp-action="Register" method="post" novalidate>
+                @{
+                    var hasModelErrors = ViewData.ModelState[string.Empty]?.Errors.Any() == true;
+                }
+                @if (hasModelErrors)
+                {
+                    <div asp-validation-summary="ModelOnly" class="alert alert-danger py-2 mb-3"></div>
+                }
+
+                <div class="mb-3">
+                    <label asp-for="Username" class="form-label"></label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-person"></i></span>
+                        <input asp-for="Username" class="form-control" placeholder="ali_yilmaz" autocomplete="username" />
+                    </div>
+                    <span asp-validation-for="Username" class="text-danger small"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Password" class="form-label"></label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-lock"></i></span>
+                        <input asp-for="Password" class="form-control" placeholder="••••••" autocomplete="new-password" />
+                    </div>
+                    <span asp-validation-for="Password" class="text-danger small"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="ConfirmPassword" class="form-label"></label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-lock-fill"></i></span>
+                        <input asp-for="ConfirmPassword" class="form-control" placeholder="••••••" autocomplete="new-password" />
+                    </div>
+                    <span asp-validation-for="ConfirmPassword" class="text-danger small"></span>
+                </div>
+
+                <div class="mb-4">
+                    <label asp-for="SelectedLevel" class="form-label"></label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-bar-chart-line"></i></span>
+                        <select asp-for="SelectedLevel" class="form-select">
+                            <option value="">-- Seviye Seç --</option>
+                            <option value="A1">A1 — Başlangıç</option>
+                            <option value="A2">A2 — Temel</option>
+                            <option value="B1">B1 — Orta</option>
+                            <option value="B2">B2 — Orta-Üstü</option>
+                            <option value="C1">C1 — İleri</option>
+                            <option value="C2">C2 — Ustaca</option>
+                        </select>
+                    </div>
+                    <small class="text-muted">Bu seviyedeki kelime ve cümlelerle başlayacaksın. Tamamlandığında bir üst seviyeye otomatik geçilir.</small>
+                    <span asp-validation-for="SelectedLevel" class="text-danger small"></span>
+                </div>
+
+                <button type="submit" class="btn btn-primary w-100 py-2">
+                    <i class="bi bi-person-plus-fill me-1"></i> Hesap Oluştur
+                </button>
+            </form>
+
+            <hr class="my-4" />
+            <p class="text-center text-muted small mb-0">
+                Zaten hesabın var mı?
+                <a asp-controller="Account" asp-action="Login" class="fw-semibold">Giriş Yap</a>
+            </p>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

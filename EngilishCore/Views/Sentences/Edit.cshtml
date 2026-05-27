@@ -1,0 +1,58 @@
+@*
+    Admin - Mevcut cümleyi düzenleme formu
+*@
+@model EnglishCore.Models.Sentence
+
+@{
+    ViewData["Title"] = "Cümle Düzenle";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="fw-bold mb-0"><i class="bi bi-pencil me-2"></i>Cümle Düzenle</h2>
+    <a asp-action="Index" class="btn btn-outline-secondary">
+        <i class="bi bi-arrow-left me-1"></i>Geri
+    </a>
+</div>
+
+<div class="card border-0 shadow-sm">
+    <div class="card-body p-4">
+        <form asp-action="Edit" method="post" novalidate>
+            @*  Id'yi hidden olarak taşıyoruz - controller route id ile karşılaştırır  *@
+            <input type="hidden" asp-for="Id" />
+
+            <div class="mb-3">
+                <label asp-for="EnglishText" class="form-label fw-medium">İngilizce</label>
+                <input asp-for="EnglishText" class="form-control" />
+                <span asp-validation-for="EnglishText" class="text-danger small"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="TurkishText" class="form-label fw-medium">Türkçe</label>
+                <input asp-for="TurkishText" class="form-control" />
+                <span asp-validation-for="TurkishText" class="text-danger small"></span>
+            </div>
+
+            <div class="mb-4">
+                <label asp-for="Level" class="form-label fw-medium">Seviye</label>
+                <select asp-for="Level" class="form-select">
+                    <option value="A1">A1 — Başlangıç</option>
+                    <option value="A2">A2 — Temel</option>
+                    <option value="B1">B1 — Orta</option>
+                    <option value="B2">B2 — Orta-Üstü</option>
+                    <option value="C1">C1 — İleri</option>
+                    <option value="C2">C2 — Ustaca</option>
+                </select>
+                <span asp-validation-for="Level" class="text-danger small"></span>
+            </div>
+
+            <button type="submit" class="btn btn-primary">
+                <i class="bi bi-check-circle me-1"></i>Güncelle
+            </button>
+            <a asp-action="Index" class="btn btn-outline-secondary">İptal</a>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

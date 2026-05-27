@@ -6,7 +6,8 @@ namespace EngilishCore
 {
     public class Program
     {
-        public static void Main(string[] args)
+        // Main async oldu çünkü uygulama açılırken Seed asenkron çalışıyor (DB'ye yazıyor)
+        public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
 
@@ -32,6 +33,14 @@ namespace EngilishCore
 
             var app = builder.Build();
 
+            // Seed: Uygulama açılırken Admin yoksa default bir admin oluştur (dev kolaylığı)
+            // Scope kullanıyoruz çünkü ApplicationDbContext "scoped" yaşam döngüsünde
+            using (var scope = app.Services.CreateScope())
+            {
+                var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+                await SeedData.SeedAsync(db);
+            }
+
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
             {
@@ -51,7 +60,7 @@ namespace EngilishCore
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
 
-            app.Run();
+            await app.RunAsync();
         }
     }
 }

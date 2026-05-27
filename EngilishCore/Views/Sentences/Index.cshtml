@@ -1,0 +1,78 @@
+@*
+    Admin - Sentences listeleme sayfası (Words/Index ile aynı pattern, sadece konu cümle)
+*@
+@model IEnumerable<EnglishCore.Models.Sentence>
+
+@{
+    ViewData["Title"] = "Cümleler";
+    var selectedLevel = ViewData["SelectedLevel"] as string;
+    var levels = new[] { "A1", "A2", "B1", "B2", "C1", "C2" };
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h2 class="fw-bold mb-1"><i class="bi bi-chat-quote me-2"></i>Cümleler</h2>
+        <p class="text-muted small mb-0">Sistemdeki tüm İngilizce cümleler.</p>
+    </div>
+    <a asp-action="Create" class="btn btn-primary">
+        <i class="bi bi-plus-circle me-1"></i>Yeni Cümle
+    </a>
+</div>
+
+@*  Seviye filtreleme  *@
+<div class="card border-0 shadow-sm mb-3">
+    <div class="card-body p-3">
+        <form method="get" class="d-flex align-items-center gap-2 m-0">
+            <label class="form-label mb-0 fw-medium">Seviye:</label>
+            <select name="level" class="form-select form-select-sm" style="width: auto;" onchange="this.form.submit()">
+                <option value="">Tümü</option>
+                @foreach (var l in levels)
+                {
+                    <option value="@l" selected="@(l == selectedLevel)">@l</option>
+                }
+            </select>
+        </form>
+    </div>
+</div>
+
+@*  Cümle tablosu  *@
+<div class="card border-0 shadow-sm">
+    <div class="table-responsive">
+        <table class="table table-hover mb-0 align-middle">
+            <thead class="table-light">
+                <tr>
+                    <th style="width: 100px;">Seviye</th>
+                    <th>İngilizce</th>
+                    <th>Türkçe</th>
+                    <th class="text-end" style="width: 140px;">İşlem</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (!Model.Any())
+                {
+                    <tr>
+                        <td colspan="4" class="text-center text-muted py-4">
+                            <i class="bi bi-inbox me-1"></i> Henüz cümle yok.
+                        </td>
+                    </tr>
+                }
+                @foreach (var s in Model)
+                {
+                    <tr>
+                        <td><span class="badge bg-primary">@s.Level</span></td>
+                        <td class="fw-medium">@s.EnglishText</td>
+                        <td class="text-muted">@s.TurkishText</td>
+                        <td class="text-end">
+                            <a asp-action="Edit" asp-route-id="@s.Id" class="btn btn-sm btn-outline-secondary" title="Düzenle">
+                                <i class="bi bi-pencil"></i>
+                            </a>
+                            <a asp-action="Delete" asp-route-id="@s.Id" class="btn btn-sm btn-outline-danger" title="Sil">
+                                <i class="bi bi-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

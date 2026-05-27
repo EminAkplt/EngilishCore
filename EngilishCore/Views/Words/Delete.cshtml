@@ -1,0 +1,47 @@
+@*
+    Admin - Kelime silme onay sayfası
+    Kullanıcıya neyi sileceğini gösterir, butona basınca Controller POST DeleteConfirmed çağrılır
+*@
+@model EnglishCore.Models.Word
+
+@{
+    ViewData["Title"] = "Kelime Sil";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="fw-bold mb-0 text-danger"><i class="bi bi-trash me-2"></i>Kelime Sil</h2>
+    <a asp-action="Index" class="btn btn-outline-secondary">
+        <i class="bi bi-arrow-left me-1"></i>Geri
+    </a>
+</div>
+
+<div class="card border-0 shadow-sm border-danger">
+    <div class="card-body p-4">
+        @*  Uyarı banner'ı - geri alınamaz işlem  *@
+        <div class="alert alert-warning d-flex align-items-center mb-4">
+            <i class="bi bi-exclamation-triangle-fill me-2"></i>
+            <div>Bu kelimeyi silmek üzeresin. Bu işlem geri alınamaz.</div>
+        </div>
+
+        @*  Silinecek kelimenin detayları  *@
+        <dl class="row mb-4">
+            <dt class="col-sm-3">Seviye</dt>
+            <dd class="col-sm-9"><span class="badge bg-primary">@Model.Level</span></dd>
+
+            <dt class="col-sm-3">İngilizce</dt>
+            <dd class="col-sm-9 fw-medium">@Model.EnglishText</dd>
+
+            <dt class="col-sm-3">Türkçe</dt>
+            <dd class="col-sm-9 text-muted">@Model.TurkishText</dd>
+        </dl>
+
+        @*  Silme onay formu — POST ile DeleteConfirmed action'a gider  *@
+        <form asp-action="Delete" method="post" class="d-inline">
+            <input type="hidden" asp-for="Id" />
+            <button type="submit" class="btn btn-danger">
+                <i class="bi bi-trash me-1"></i>Sil
+            </button>
+        </form>
+        <a asp-action="Index" class="btn btn-outline-secondary">İptal</a>
+    </div>
+</div>

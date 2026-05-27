@@ -248,17 +248,17 @@ Tüm string alanlarda `[Required]` ve uygun `[MaxLength]` konulur. EF Core, Post
 
 ## 11. Geliştirme Sırası (Yol Haritası)
 
-1. `ApplicationDbContext` oluştur.
-2. Modellerde validation/constraint/navigation eksiklerini tamamla, `PasswordHash` alanına geç.
-3. `appsettings.json` connection string ekle.
-4. `Program.cs` üzerinde DbContext kaydı + cookie auth + authorization.
-5. İlk migration: `InitialCreate`.
-6. Auth controller'ları: Register / Login / Logout.
-7. Admin paneli: Word ve Sentence CRUD.
-8. User dashboard: günlük limit ayarı + seviye seçimi.
-9. Günlük Kart akışı (yeni + tekrar listesi mantığı).
-10. Öğrenilenler Havuzu ekranı + Geri Al butonu.
-11. İlerleme Çizelgesi widget'ı.
-12. Karışık Tekrar Modu.
-13. UI iyileştirme (Tinder-card animasyon, görsel API entegrasyonu, Web Speech API).
-14. **Şifre hash'lemeyi etkinleştir** (BCrypt.Net-Next ile) — auth tamamlandıktan sonra veya production öncesi.
+1. ✅ `ApplicationDbContext` oluştur.
+2. ✅ Modellerde validation/constraint/navigation eksiklerini tamamla, `PasswordHash` alanına geç.
+3. ✅ `appsettings.json` connection string ekle.
+4. ✅ `Program.cs` üzerinde DbContext kaydı + cookie auth + authorization.
+5. ✅ İlk migration: `InitialCreate`.
+6. ✅ Auth controller'ları: Register / Login / Logout (+ AccessDenied + seed admin).
+7. ✅ Admin paneli: Word ve Sentence CRUD (rol bazlı `[Authorize(Roles="Admin")]`).
+8. ⏳ User dashboard: günlük limit ayarı + seviye seçimi.
+9. ⏳ Günlük Kart akışı (yeni + tekrar listesi mantığı).
+10. ⏳ Öğrenilenler Havuzu ekranı + Geri Al butonu.
+11. ⏳ İlerleme Çizelgesi widget'ı.
+12. ⏳ Karışık Tekrar Modu.
+13. ⏳ UI iyileştirme (Tinder-card animasyon, görsel API entegrasyonu, Web Speech API).
+14. ⏳ **Şifre hash'lemeyi etkinleştir** (BCrypt.Net-Next ile) — auth tamamlandıktan sonra veya production öncesi.

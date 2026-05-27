@@ -31,6 +31,20 @@
                                 <i class="bi bi-house-door me-1"></i>Ana Sayfa
                             </a>
                         </li>
+                        @* Sadece Admin rolündeki kullanıcılar Words/Sentences yönetim menülerini görür *@
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-controller="Words" asp-action="Index">
+                                    <i class="bi bi-journal-text me-1"></i>Kelimeler
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-controller="Sentences" asp-action="Index">
+                                    <i class="bi bi-chat-quote me-1"></i>Cümleler
+                                </a>
+                            </li>
+                        }
                     </ul>
                     <ul class="navbar-nav align-items-center">
                         @if (User.Identity?.IsAuthenticated == true)
